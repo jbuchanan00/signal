@@ -7,23 +7,25 @@ import {
   ScrollRestoration,
 } from "react-router";
 
+import React from "react";
+
 import type { Route } from "./+types/root";
 import "./app.css";
 
+import ImperativeMount from "./components/ImperativeMount";
+
+const TOP_URL = import.meta.env.NAVBAR_URL ?? "http://localhost:5174/navbars.js"
+const BOTTOM_URL = import.meta.env.BOTTOM_NAVBAR_URL ?? "http://localhost:5174/navbars.js"
+const ASSET_BASE = import.meta.env.NAVBAR_ASSET_BASE ?? "http://localhost:5174/"
+
+
 export const links: Route.LinksFunction = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
-  },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const sharedProps = {
+    assetBase: ASSET_BASE
+  }
   return (
     <html lang="en">
       <head>
@@ -33,7 +35,21 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <div>
+          <ImperativeMount
+            url={TOP_URL}
+            which="TopNavInstance"
+            mountProps={sharedProps}
+            placeholderHeight={60} />
+          <div>
+            {children}
+          </div>
+          <ImperativeMount
+            url={BOTTOM_URL}
+            which="BottomNavInstance"
+            mountProps={sharedProps}
+            placeholderHeight={60} />
+        </div>
         <ScrollRestoration />
         <Scripts />
       </body>
