@@ -8,9 +8,9 @@ import {
 } from "react-router";
 
 import React from "react";
+import stylesheet from './app.css?url'
 
 import type { Route } from "./+types/root";
-import "./app.css";
 
 import ImperativeMount from "./components/ImperativeMount";
 
@@ -20,6 +20,7 @@ const ASSET_BASE = import.meta.env.NAVBAR_ASSET_BASE ?? "http://localhost:5174/"
 
 
 export const links: Route.LinksFunction = () => [
+  {rel: "stylesheet", href: stylesheet}
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -41,7 +42,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             which="TopNavInstance"
             mountProps={sharedProps}
             placeholderHeight={60} />
-          <div>
+          <div className="children">
             {children}
           </div>
           <ImperativeMount
