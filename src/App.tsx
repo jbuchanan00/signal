@@ -1,33 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import './App.css'
+import TopNavbar from './components/TopNavbar'
+import BottomNavbar from './components/BottomNavbar'
+import { useEffect } from 'react'
+import { loadNavbars } from './remote/loadNavbars'
 
 function App() {
-  const [count, setCount] = useState(0)
+  useEffect(() => {
+    let topDestroy: null | (() => void) = null
+    let bottomDestroy: null | (() => void) = null
+    let cancelled = false
+
+    const fetchRemotes = async () => {
+      try{
+        const topNavElement = document.getElementById('top-nav')
+        const bottomNavElement = document.getElementById('bottom-nav')
+        const remote = await loadNavbars()
+        if(cancelled) return
+        if(topNavElement){
+          const {destroy} = remote.TopNavInstance(topNavElement, {assetBase: import.meta.env.VITE_NAVBAR_ASSET_BASE + '/'})
+          topDestroy = destroy
+        } 
+        if(bottomNavElement){
+          const {destroy} = remote.BottomNavInstance(bottomNavElement, {assetBase: import.meta.env.VITE_NAVBAR_ASSET_BASE + '/'})
+          bottomDestroy = destroy
+        } 
+      }catch(e){
+        console.log('ERROR', e)
+      }
+    }
+
+    fetchRemotes()
+
+    return () => {
+      cancelled = true
+      if(topDestroy) topDestroy()
+      if(bottomDestroy) bottomDestroy()
+    }
+  }, [])
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <div id='top-nav'></div>
+      <div id='bottom-nav'></div>
     </>
   )
 }
