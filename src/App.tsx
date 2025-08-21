@@ -1,9 +1,8 @@
 
 import './App.css'
-import TopNavbar from './components/TopNavbar'
-import BottomNavbar from './components/BottomNavbar'
 import { useEffect } from 'react'
 import { loadNavbars } from './remote/loadNavbars'
+import { Feed } from './components/feed/base'
 
 function App() {
   useEffect(() => {
@@ -42,6 +41,8 @@ function App() {
   return (
     <>
       <div id='top-nav'></div>
+      <Feed />
+      <div id='behind-bottom-nav'></div>
       <div id='bottom-nav'></div>
     </>
   )
