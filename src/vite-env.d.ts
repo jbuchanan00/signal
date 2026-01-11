@@ -20,3 +20,15 @@ export interface PosterData {
 export interface Tag {
     name: string
 }
+
+export interface Location {
+    city: string,
+    city_ascii: string,
+    state_id: string,
+    state_name: string,
+    lat: number,
+    lng: number,
+    population: number,
+    ranking: number,
+    id: number
+}
