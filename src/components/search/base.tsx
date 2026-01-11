@@ -1,12 +1,12 @@
-import type { ReactElement } from 'react';
 import { useState } from 'react'
 import styles from './base.module.css'
 
-export function Search(){
+export function Search({searchChange}: {searchChange: (e: React.ChangeEvent<HTMLInputElement>) => void}){
     const [location, setLocation] = useState("")
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>){
         setLocation(e.target.value)
+        searchChange(e)
     }
 
     function handleSubmit(e: React.FormEvent<HTMLFormElement>){
@@ -14,7 +14,7 @@ export function Search(){
     }
     
     return (
-        <div>
+        <div className={styles.search}>
             <h1>Search</h1>
             <form onSubmit={handleSubmit}>
                 <label>Search
