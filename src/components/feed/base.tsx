@@ -10,11 +10,31 @@ export function Feed(){
     //I think the best way to determine if a post has been liked by the user is to take what the user has liked, hash it, then in each post check if the postid hashed exists
     const [searchInput, setSearchInput] = useState('')
     const [locationsList, setLocationsList] = useState([])
+    const [radius, setRadius] = useState(20)
 
-    const backendAPI = process.env.REACT_APP_BACKEND_URL
+    const backendAPI = 'http://localhost:8082'
 
-    function handling(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
-        console.log("Handling:", e)
+    async function handling(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
+        const target = e.target as HTMLTextAreaElement
+        const val = JSON.parse(target.value as string)
+        console.log("Handling:", target.value, radius)
+        const body = {
+            loc: {
+                lat: val.latitude,
+                lng: val.longitude
+            },
+            radius
+        }
+        const res = await fetch(`${backendAPI}/posts/search`, {
+            body: JSON.stringify(body), 
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        console.log("Result:", res)
+        const data = await res.json()
+        console.log(data)
     }
 
     function displayDropdown(){
@@ -33,13 +53,21 @@ export function Feed(){
     }
 
     async function getAutofillSuggestions(query: string){
-        const res = await fetch(`${backendAPI}/location/autofill?text=${query}`)
+        const res = await fetch(`${backendAPI}/api/location/autofill?text=${query}`)
         const data = await res.json()
+        if(!data){
+            return ['None Found']
+        }
         return data
+    }
+
+    function handleRadiusClick(e: React.ChangeEvent<HTMLSelectElement>){
+        setRadius(parseInt(e.target.value))
     }
 
     useEffect(() => {
         if(searchInput.length < 3){
+            setLocationsList([])
             return
         }
         const handler = setTimeout(async () => {
@@ -55,7 +83,7 @@ export function Feed(){
     return (
         <div className={styles.home}>
             <div className={styles.search}>
-                <Search searchChange={searchChange} />
+                <Search searchChange={searchChange} handleRadiusClick={handleRadiusClick} />
             </div>
             <div className={styles.dropdown}>
                 {displayDropdown()}

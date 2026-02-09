@@ -11,7 +11,7 @@ export function Dropdown({locations, handling}: {locations: Location[], handling
         locations.forEach((location) => {
             buttonList.push(
             <button className={styles.location} type="button" onClick={(e) => handling(e)} value={JSON.stringify(location)}>
-                {location.city}{location.state_id ? `, ${location.state_id}` : ''}
+                {location.name}{location.state ? `, ${location.state}` : ''}
             </button>
         )})
 
@@ -19,7 +19,7 @@ export function Dropdown({locations, handling}: {locations: Location[], handling
     }
 
     return (
-        <div>
+        <div className={styles.total}>
             {locationsList(locations)}
         </div>
     )

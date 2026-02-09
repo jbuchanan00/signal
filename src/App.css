@@ -20,6 +20,9 @@ body {
   line-height: 1.5;
   /* 5. Improve text rendering */
   -webkit-font-smoothing: antialiased;
+  display: flex;
+  justify-content: center;
+  background-color: black;
 }
 
 /* 6. Improve media defaults */

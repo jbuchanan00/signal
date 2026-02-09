@@ -22,12 +22,10 @@ export interface Tag {
 }
 
 export interface Location {
-    city: string,
-    city_ascii: string,
-    state_id: string,
-    state_name: string,
-    lat: number,
-    lng: number,
+    name: string,
+    state: string,
+    latitude: number,
+    longitude: number,
     population: number,
     ranking: number,
     id: number
