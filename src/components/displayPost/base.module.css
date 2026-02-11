@@ -1,0 +1,42 @@
+.body {
+    width: 100%;
+    border: 5px solid #000;
+    box-shadow: 5px 5px black;
+    background-color: white;
+}
+
+.tags{
+    display: flex;
+}
+
+.body img {
+    border-bottom: 3px solid black;
+}
+
+.name {
+    color: #9333ea;
+    font-weight: bolder;
+    text-transform: capitalize;
+    margin: 5px;
+}
+
+.store {
+    color: #4f5966;
+    font-size: medium;
+    margin-left: 5px;
+}
+
+.timeandsource {
+    display: flex;
+    justify-content: space-between;
+    font-size: small;
+    color: #4f5966;
+    font-weight: lighter;
+    margin: 3px;
+    align-items: center;
+}
+
+.source img {
+    width: 30px;
+    border-bottom: none;
+}

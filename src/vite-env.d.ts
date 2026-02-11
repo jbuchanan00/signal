@@ -9,12 +9,14 @@ export interface PostData {
     description: string | null
     tags: Tag[] | null
     createdAt?: string
+    source?: string
 }
 
 export interface PosterData {
     profilePicture: string | null
     displayName: string
     locationStr: string | null
+    shopName: string | null
 }
 
 export interface Tag {
