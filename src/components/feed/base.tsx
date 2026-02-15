@@ -1,16 +1,16 @@
 import styles from'./base.module.css'
 
 import {Search} from '../search'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { Dropdown } from '../dropdown'
 import { DisplayPost } from '../displayPost'
 
 export function Feed(){
     const postTags = [{name: "Hello"}, {name: "Blackwork"}]
-    //I think the best way to determine if a post has been liked by the user is to take what the user has liked, hash it, then in each post check if the postid hashed exists
     const [searchInput, setSearchInput] = useState('')
     const [locationsList, setLocationsList] = useState([])
     const [radius, setRadius] = useState(20)
+    const [postList, setPostList] = useState([])
 
     const backendAPI = 'http://localhost:8082'
 
@@ -34,7 +34,18 @@ export function Feed(){
         })
         console.log("Result:", res)
         const data = await res.json()
-        console.log(data)
+        setPostList(data)
+    }
+
+    function displayPosts(){
+
+        return postList.map((val, i) => {
+            return (
+                <div key={i}>
+                    {val}
+                </div>
+            )
+        })
     }
 
     function displayDropdown(){
@@ -89,11 +100,7 @@ export function Feed(){
                 {displayDropdown()}
             </div>
             <div className={styles.feed}>
-                <DisplayPost postData={{tags: postTags, createdAt: '2025-08-12 22:00:01.41', mediaUrl: '/test/test-post-picture.jpg', description: null, source: "instagram"}} posterData={{displayName: 'John Doe', profilePicture: null, locationStr: null, shopName: null}}/>
-                <DisplayPost postData={null} posterData={{displayName: 'Jane Doe', profilePicture: null, locationStr: null, shopName: null}}/>
-                <DisplayPost postData={null} posterData={null}/>
-                <DisplayPost postData={{tags: postTags, createdAt: '2025-08-12 22:00:01.41', mediaUrl: '/test/test-post-picture.jpg', description: null}} posterData={{displayName: 'John Doe', profilePicture: null, locationStr: null, shopName: null}}/>
-
+                {postList.length > 0 ? displayPosts() : null}
             </div>
         </div>
     )
