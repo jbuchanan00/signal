@@ -1,11 +1,11 @@
 import type { ReactElement, ReactNode } from "react";
-import type { PostData } from "../../vite-env";
+import type { PostData, PosterData } from "../../vite-env";
 import { Tag } from '../tag';
 import styles from './base.module.css'
 
 
 
-export function DisplayPost({postData}: {postData: PostData | null}): ReactNode{
+export function DisplayPost({postData}: {postData: PostData | null, posterData: PosterData | null, shop: null}): ReactNode{
     console.log(postData)
     const SECONDS = 1000
     const MINUTES = SECONDS * 60
@@ -16,8 +16,9 @@ export function DisplayPost({postData}: {postData: PostData | null}): ReactNode{
     const YEARS = MONTHS * 12
     
     const postUrl = "./test/test-post-picture.jpg";
+    const baseImageUrl = "localhost:9090"
 
-       function renderTags(): ReactElement{
+    function renderTags(): ReactElement{
         if(!postData?.tags || postData.tags.length < 1 ){
             return <div></div>
         }else{
@@ -35,7 +36,7 @@ export function DisplayPost({postData}: {postData: PostData | null}): ReactNode{
         }
     }
 
-        function formatTime(){
+    function formatTime(){
         if(postData?.createdAt){
             const timeDif = new Date(Date.now()).valueOf() - new Date(postData.createdAt).valueOf();
             if(timeDif < 30 * SECONDS){
@@ -63,7 +64,7 @@ export function DisplayPost({postData}: {postData: PostData | null}): ReactNode{
 
     return (
         <div className={styles.body}>
-            <img src={`${postData?.mediaUrl ?? postUrl}`} alt="post" />
+            <img src={`${postUrl}`} alt="post" />
             <div className={styles.tags}>
                 {renderTags()}
             </div>

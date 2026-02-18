@@ -1,0 +1,28 @@
+syntax = "proto3";
+package image.v1;
+option java_multiple_files = true;
+option java_package = "com.inkedout.tortuga.grpc";
+option java_outer_classname = "ImageServiceProto";
+
+service ImageService {
+  rpc UploadImage (UploadImageRequest) returns (UploadImageResponse);
+
+  rpc GetImage (GetImageRequest) returns (GetImageResponse);
+}
+
+message UploadImageRequest {
+  string filename = 1;
+  bytes data = 2;
+}
+
+message UploadImageResponse {
+  string message = 1;
+}
+
+message GetImageRequest {
+  string filename = 1;
+}
+
+message GetImageResponse {
+  bytes data = 1;
+}
