@@ -1,7 +1,7 @@
 import styles from'./base.module.css'
 
 import {Search} from '../search'
-import { useEffect, useState } from 'react'
+import { useEffect, useState} from 'react'
 import { Dropdown } from '../dropdown'
 import { DisplayPost } from '../displayPost'
 import type { PostData, PosterData } from '../../vite-env'
@@ -51,7 +51,7 @@ export function Feed(){
             postList.map((val, i) => {
                 return (
                     <div key={i}>
-                        <DisplayPost postData={val.post} posterData={val.user} />
+                        <DisplayPost postData={val.post} posterData={val.user} shop={null}/>
                     </div>
                 )
             })

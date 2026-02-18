@@ -1,7 +1,16 @@
 /// <reference types="vite/client" />
 
 export interface UserData {
-
+    id: string,
+    first_name: string,
+    last_name: string,
+    email: string,
+    username: string | null,
+    avatar_extension: string | null,
+    role_id: number | null,
+    location: {lat: string, long: string} | null,
+    bio: string | null,
+    shop_id: string | null
 }
 
 export interface PostData {

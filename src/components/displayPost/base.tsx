@@ -5,8 +5,8 @@ import styles from './base.module.css'
 
 
 
-export function DisplayPost({postData, posterData}: {postData: PostData | null, posterData: PosterData | null}): ReactNode{
-    console.log(postData, posterData)
+export function DisplayPost({postData}: {postData: PostData | null, posterData: PosterData | null, shop: null}): ReactNode{
+    console.log(postData)
     const SECONDS = 1000
     const MINUTES = SECONDS * 60
     const HOURS = MINUTES * 60
@@ -68,12 +68,12 @@ export function DisplayPost({postData, posterData}: {postData: PostData | null, 
             <div className={styles.tags}>
                 {renderTags()}
             </div>
-            <div className={styles.name}>
-                {posterData?.username ?? `${posterData?.firstName} ${posterData?.lastName}`}
+            {/* <div className={styles.name}>
+                {posterData?.displayName ?? "John Doe"}
             </div>
             <div className={styles.store}>
-                {posterData?.shopId ?? "Independent"}
-            </div>
+                {posterData?.shopName ?? "Independent"}
+            </div> */}
             <div className={styles.timeandsource}>
                 <div className={styles.time}>
                     {formatTime()}
