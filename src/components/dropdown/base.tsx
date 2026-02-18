@@ -8,9 +8,9 @@ export function Dropdown({locations, handling}: {locations: Location[], handling
     function locationsList(locations: Location[]): ReactNode[]{
         let buttonList: ReactNode[] = []
 
-        locations.forEach((location) => {
+        locations.forEach((location, i) => {
             buttonList.push(
-            <button className={styles.location} type="button" onClick={(e) => handling(e)} value={JSON.stringify(location)}>
+            <button key={i} className={styles.location} type="button" onClick={(e) => handling(e)} value={JSON.stringify(location)}>
                 {location.name}{location.state ? `, ${location.state}` : ''}
             </button>
         )})

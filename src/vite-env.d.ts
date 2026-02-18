@@ -5,18 +5,28 @@ export interface UserData {
 }
 
 export interface PostData {
-    mediaUrl: string
-    description: string | null
+    body: string | null
     tags: Tag[] | null
-    createdAt?: string
+    createdAt: string
+    updatedAt?: string
     source?: string
+    role?: number
+    mediaType?: number
+    id: string
+    imageId?: string
 }
 
 export interface PosterData {
-    profilePicture: string | null
-    displayName: string
-    locationStr: string | null
-    shopName: string | null
+    id: string
+    firstName: string
+    lastName: string
+    email: string
+    username: string | null
+    avatarExtension: string | null
+    roleId: number | null
+    location: Location | null
+    bio: string | null
+    shopId: string | null
 }
 
 export interface Tag {

@@ -16,8 +16,9 @@ export function DisplayPost({postData, posterData}: {postData: PostData | null, 
     const YEARS = MONTHS * 12
     
     const postUrl = "./test/test-post-picture.jpg";
+    const baseImageUrl = "localhost:9090"
 
-       function renderTags(): ReactElement{
+    function renderTags(): ReactElement{
         if(!postData?.tags || postData.tags.length < 1 ){
             return <div></div>
         }else{
@@ -35,7 +36,7 @@ export function DisplayPost({postData, posterData}: {postData: PostData | null, 
         }
     }
 
-        function formatTime(){
+    function formatTime(){
         if(postData?.createdAt){
             const timeDif = new Date(Date.now()).valueOf() - new Date(postData.createdAt).valueOf();
             if(timeDif < 30 * SECONDS){
@@ -63,15 +64,15 @@ export function DisplayPost({postData, posterData}: {postData: PostData | null, 
 
     return (
         <div className={styles.body}>
-            <img src={`${postData?.mediaUrl ?? postUrl}`} alt="post" />
+            <img src={`${postUrl}`} alt="post" />
             <div className={styles.tags}>
                 {renderTags()}
             </div>
             <div className={styles.name}>
-                {posterData?.displayName ?? "John Doe"}
+                {posterData?.username ?? `${posterData?.firstName} ${posterData?.lastName}`}
             </div>
             <div className={styles.store}>
-                {posterData?.shopName ?? "Independent"}
+                {posterData?.shopId ?? "Independent"}
             </div>
             <div className={styles.timeandsource}>
                 <div className={styles.time}>
