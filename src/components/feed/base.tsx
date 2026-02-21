@@ -31,7 +31,7 @@ export function Feed(){
                 "Content-Type": "application/json"
             }
         })
-        console.log("Res")
+        
         const data: [{post: PostData, user: PosterData, shop: null}] | null = await res.json()
         console.log("Data", data)
         if(data && data.length > 0){
@@ -41,7 +41,8 @@ export function Feed(){
     }
 
     function displayPosts(){
-        if(!postList){
+        console.log("Post List", postList)
+        if(!postList || postList?.length < 1){
             return (
                 <div>
                 </div>

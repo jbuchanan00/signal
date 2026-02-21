@@ -1,4 +1,4 @@
-import type { ReactElement, ReactNode } from "react";
+import { useEffect, useState, type ReactElement, type ReactNode } from "react";
 import type { PostData, PosterData } from "../../vite-env";
 import { Tag } from '../tag';
 import styles from './base.module.css'
@@ -6,6 +6,8 @@ import styles from './base.module.css'
 
 
 export function DisplayPost({postData}: {postData: PostData | null, posterData: PosterData | null, shop: null}): ReactNode{
+    const [image, setImage] = useState('')
+    
     console.log(postData)
     const SECONDS = 1000
     const MINUTES = SECONDS * 60
@@ -16,7 +18,7 @@ export function DisplayPost({postData}: {postData: PostData | null, posterData: 
     const YEARS = MONTHS * 12
     
     const postUrl = "./test/test-post-picture.jpg";
-    const baseImageUrl = "localhost:9090"
+    const baseImageUrl = "localhost:8083/image"
 
     function renderTags(): ReactElement{
         if(!postData?.tags || postData.tags.length < 1 ){
@@ -35,6 +37,25 @@ export function DisplayPost({postData}: {postData: PostData | null, posterData: 
             )
         }
     }
+
+    useEffect(() => {
+    async function getImage(id: string): Promise<string>{
+        return await fetch(`${baseImageUrl}?id=${id}`).then(async res => {
+            const json = await res.json()
+            return json.body
+        }).catch(e => {
+            console.log("Error getting image", id, e)
+            return postUrl
+        })
+    }
+
+    async function displayImage(){
+        const determinedImage = await getImage(postData?.imageId!)
+        console.log("Image: ", image)
+        setImage(determinedImage)
+    }
+    displayImage()
+    }, [])
 
     function formatTime(){
         if(postData?.createdAt){
@@ -64,7 +85,7 @@ export function DisplayPost({postData}: {postData: PostData | null, posterData: 
 
     return (
         <div className={styles.body}>
-            <img src={`${postUrl}`} alt="post" />
+            <img src={image} alt="post" />
             <div className={styles.tags}>
                 {renderTags()}
             </div>
