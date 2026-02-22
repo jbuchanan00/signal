@@ -62,4 +62,9 @@ h1, h2, h3, h4, h5, h6 {
 
 #behind-bottom-nav {
   height: 75px;
+  border: 2px solid blue;
+}
+
+#bottom-nav > div{
+  width: 500px;
 }

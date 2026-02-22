@@ -18,7 +18,7 @@ export function DisplayPost({postData}: {postData: PostData | null, posterData: 
     const YEARS = MONTHS * 12
     
     const postUrl = "./test/test-post-picture.jpg";
-    const baseImageUrl = "localhost:8083/image"
+    const baseImageUrl = "http://localhost:8083/image"
 
     function renderTags(): ReactElement{
         if(!postData?.tags || postData.tags.length < 1 ){
@@ -42,7 +42,8 @@ export function DisplayPost({postData}: {postData: PostData | null, posterData: 
     async function getImage(id: string): Promise<string>{
         return await fetch(`${baseImageUrl}?id=${id}`).then(async res => {
             const json = await res.json()
-            return json.body
+            console.log("Fetch res: ", json)
+            return json.image
         }).catch(e => {
             console.log("Error getting image", id, e)
             return postUrl
@@ -51,8 +52,8 @@ export function DisplayPost({postData}: {postData: PostData | null, posterData: 
 
     async function displayImage(){
         const determinedImage = await getImage(postData?.imageId!)
-        console.log("Image: ", image)
-        setImage(determinedImage)
+        console.log("Image: ", determinedImage)
+        setImage("data:image/jpg;base64," + determinedImage)
     }
     displayImage()
     }, [])
@@ -85,7 +86,9 @@ export function DisplayPost({postData}: {postData: PostData | null, posterData: 
 
     return (
         <div className={styles.body}>
-            <img src={image} alt="post" />
+            <div className={styles.postImg}>
+                <img src={image} alt="post" />
+            </div>
             <div className={styles.tags}>
                 {renderTags()}
             </div>

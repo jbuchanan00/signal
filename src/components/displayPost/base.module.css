@@ -9,10 +9,6 @@
     display: flex;
 }
 
-.body img {
-    border-bottom: 3px solid black;
-}
-
 .name {
     color: #9333ea;
     font-weight: bolder;
@@ -39,4 +35,16 @@
 .source img {
     width: 30px;
     border-bottom: none;
+}
+
+.postImg {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-bottom: 3px solid black;
+    background-color: black;
+}
+
+.postImg img {
+    max-height: 200px;
 }

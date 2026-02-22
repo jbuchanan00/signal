@@ -1,11 +1,13 @@
 .feed {
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: repeat(2, 1fr);
     min-height: 100px;
     gap: 10px;
     margin: 10px;
     padding: 10px;
     align-items: flex-start;
+    grid-auto-flow: dense;
+    grid-auto-rows: minmax(100px, auto);
 }
 
 .home {
